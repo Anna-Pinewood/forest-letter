@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#242b20">
+  <meta name="description" content="Маленькая лесная история, написанная для тебя.">
+  <title>О чём мне поведали грибы?</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/cormorant.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="forest" aria-hidden="true"></div>
+  <div class="mist" aria-hidden="true"></div>
+  <canvas id="particles" aria-hidden="true"></canvas>
+  <svg class="svg-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="paper-grain"><feTurbulence type="fractalNoise" baseFrequency=".65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".13"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter>
+      <symbol id="sprig" viewBox="0 0 110 36"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M5 23Q48 9 103 22M53 17L56 5M69 17L77 7M38 17L30 7M23 19L15 11M83 18L94 12"/><path d="M56 5Q43 0 51 14Q62 12 56 5M77 7Q64 4 66 16Q79 18 77 7M30 7Q24 18 38 17Q41 7 30 7M15 11Q10 22 23 19Q27 10 15 11M94 12Q82 9 83 18Q96 22 94 12M43 18Q40 32 53 28Q60 21 43 18M69 18Q65 31 78 28Q82 20 69 18"/></g></symbol>
+    </defs>
+  </svg>
+
+  <header class="masthead"><span class="tiny-star">✧</span> МАЛЕНЬКАЯ ЛЕСНАЯ ИСТОРИЯ <span class="tiny-star">✧</span></header>
+
+  <main>
+    <div class="book-stage" id="stage">
+      <div class="book" id="book">
+        <div class="book-binding" aria-hidden="true"></div>
+        <div class="spread" id="spread" inert>
+          <section class="page page-left" aria-label="Ботаническая иллюстрация">
+            <div class="plate-top">ИЗ ТАЙНОЙ ЖИЗНИ ЛЕСА</div>
+            <div class="illustration-wrap"><img class="botanical" id="botanical" src="assets/mushrooms.jpg" alt="Мухоморы среди мха, папоротников и осенних листьев — иллюстрация из старого ботанического атласа."></div>
+            <div class="plate-caption"><span class="plate-number" id="plateNumber">Таблица I</span><span id="plateCaption">Тихие обитатели леса</span></div>
+            <span class="page-number" id="leftNumber">2</span>
+          </section>
+          <section class="page page-right" aria-label="Письмо для тебя">
+            <div class="chapter-label" id="chapterLabel">ГЛАВА ПЕРВАЯ</div>
+            <svg class="page-sprig" aria-hidden="true"><use href="#sprig"/></svg>
+            <h2 id="pageHeading">О том, что ты</h2>
+            <div class="words" id="words" aria-live="polite" aria-atomic="false"></div>
+            <div class="page-flourish" aria-hidden="true">✧</div>
+            <span class="page-number" id="rightNumber">3</span>
+          </section>
+        </div>
+        <div class="turning-leaf" id="turningLeaf" aria-hidden="true"><div class="leaf-front"></div><div class="leaf-back"></div></div>
+        <button class="cover" id="cover" aria-label="Открыть книгу «О чём мне поведали грибы?»">
+          <span class="cover-spine" aria-hidden="true"></span>
+          <span class="cover-frame" aria-hidden="true"></span>
+          <span class="cover-frame inner" aria-hidden="true"></span>
+          <span class="corner top-left" aria-hidden="true">❧</span><span class="corner top-right" aria-hidden="true">❧</span>
+          <span class="corner bottom-left" aria-hidden="true">❧</span><span class="corner bottom-right" aria-hidden="true">❧</span>
+          <span class="cover-eyebrow">ЛЕСНЫЕ ПРИЗНАНИЯ</span>
+          <svg class="cover-sprig" aria-hidden="true"><use href="#sprig"/></svg>
+          <h1>О чём мне<br>поведали<br><em>грибы?</em></h1>
+          <span class="cover-portrait"><img src="assets/mushrooms.jpg" alt="" draggable="false"></span>
+          <span class="cover-dedication">шурхххх </span>
+          <span class="cover-star" aria-hidden="true">✧</span>
+        </button>
+        <div class="ribbon" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="under-book">
+      <button class="open-button" id="openButton"><span>Открыть книгу</span><span aria-hidden="true">↗</span></button>
+      <div class="reading-controls" id="readingControls" hidden>
+        <button class="icon-button" id="previous" aria-label="Предыдущий разворот" title="Предыдущий разворот">←</button>
+        <div class="progress-dots" id="progressDots" aria-label="Развороты"><button class="dot active" data-page="0" aria-label="Первый разворот" aria-current="step"></button><button class="dot" data-page="1" aria-label="Второй разворот"></button><button class="dot" data-page="2" aria-label="Третий разворот"></button><button class="dot" data-page="3" aria-label="Заключительный разворот"></button></div>
+        <button class="icon-button" id="next" aria-label="Следующий разворот" title="Следующий разворот">→</button>
+        <span class="control-divider" aria-hidden="true"></span>
+        <button class="text-button" id="pause" aria-label="Приостановить историю">Ⅱ <span>Пауза</span></button>
+        <button class="text-button" id="replay" aria-label="Прочитать историю заново">↻ <span>Сначала</span></button>
+      </div>
+      <p class="reading-hint" id="hint">некоторые секреты лес рассказывает шёпотом</p>
+    </div>
+  </main>
+
+  <footer><svg aria-hidden="true"><use href="#sprig"/></svg><span>шшшшшш</span><svg aria-hidden="true"><use href="#sprig"/></svg></footer>
+  <noscript><p class="noscript-note">О том, что ты — мягкий и терпеливый человек; обладаешь спокойным темпераментом; можешь сидеть и сконцентрированно работать ЧАСАМИ; красивый и с блестящими волосами. О том, что ты обладаешь приятным голосом; лес на твоей стороне. грибы наблюдали за тобой год и желают тебе счастья. Чтобы открыть анимированную книгу, включи JavaScript.</p></noscript>
+</body>
+</html>
